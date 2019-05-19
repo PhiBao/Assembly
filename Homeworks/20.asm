@@ -5,6 +5,7 @@
     str2 db 10,13,"Khong phai la so hoan hao$"
     so dw 0
     sum dw 0
+    muoi db 10
     PRINT macro ThongBao proc
         lea dx, ThongBao
         mov ah, 9
@@ -28,9 +29,8 @@
             sub al, 30h
             xor ah, ah
             mov cx, ax
-            mov bx, 10
             mov ax, so
-            mul bx
+            mul muoi
             add ax, cx
             mov so, ax 
             jmp Lap1
