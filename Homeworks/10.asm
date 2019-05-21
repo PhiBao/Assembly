@@ -1,7 +1,6 @@
 .model small
 .stack 50           
 .data
-    so db 10,0,10 dup($)
     muoi db 10
     str1 db 10,13,'A: $'
     str2 db 10,13,'B: $'
@@ -21,89 +20,101 @@
         
         PRINT str1
         
-        mov ah, 0Ah
-        lea dx, so
-        int 21h
-        
-        call Xuli
-        mov b1, dx
+        call Nhap
+        mov b1, bx
         
         PRINT str2
         
-        mov ah, 0Ah
-        lea dx, so
-        int 21h
-        
-        call Xuli
-        mov b2, dx
-        
-        PRINT str3
+        call Nhap
+        mov b2, bx
         
         mov dx, b1
-        mov ax, b2
-        
+        mov bx, b2
         xor cx, cx
-        Chia:
-            sub dx, ax
-            inc cx
-            cmp dx, ax
-            jae Chia 
+        
+      Chia:
+        cmp dx, bx
+        ja Tiep
+            
+       Tru: 
+        sub bx, dx
+        inc cx
+        cmp bx, dx
+        jae Tru
+        jmp Ex
+            
+       Tiep: 
+        sub dx, bx
+        inc cx
+        cmp dx, bx
+        jae Tiep 
+        
+      Ex:
+        PRINT str3
         
         mov ax, cx 
         call HienThi   
         
         PRINT str4
         
-        xor cx, cx
-        xor dx, dx 
+        xor ax, ax 
         mov cx, b2
-        Nhan:
-            add dx, b1
-            Loop Nhan 
-                
-        mov ax, dx  
+        
+      Nhan:
+        add ax, b1
+        Loop Nhan 
+                  
         call HienThi 
         
         mov ah, 4ch
         int 21h
     main endp 
     
-    HienThi proc 
-        xor cx, cx
-           Lapchia:
-            xor dx, dx
-            div muoi
+    HienThi proc
+         
+        xor cx, cx 
+        
+      Lapchia:
+        xor dx, dx
+        div muoi
             
-            add ah, 30h
-            mov dl, ah
-            push dx
-            inc cx
-            xor ah, ah
-            cmp ax, 0
-            jne Lapchia
-        Doc:
-            pop dx
-            mov ah, 2 
-            int 21h
-            loop Doc
-            ret
+        add ah, 30h
+        mov dl, ah
+        push dx
+        inc cx
+        xor ah, ah
+        cmp ax, 0
+        jne Lapchia
+            
+      Doc:
+        pop dx
+        mov ah, 2 
+        int 21h
+        loop Doc
+        ret
     HienThi endp
     
-    Xuli proc
-        xor dx, dx
-        xor cx, cx
-        lea si, so + 2
-        mov cl, [so+1]
-        Lap:
-            mov ax, dx
-            xor bx, bx
-            mov bl, [si]
-            sub bl, 30h
-            mul muoi
-            add ax, bx
-            mov dx, ax
-            inc si
-            loop Lap
-            ret
-    Xuli endp
+    Nhap proc
+        
+        xor bx, bx
+        
+      Lap:
+        mov ah, 1
+        int 21h
+        cmp al, 13
+        je Thoat
+        sub al, 30h
+        xor ah, ah
+        mov cx, ax
+        mov ax, bx
+        mul muoi
+        add ax, cx
+        mov bx, ax 
+        jmp Lap
+        
+      Thoat:
+        ret
+        
+    Nhap endp
+    
 end main
