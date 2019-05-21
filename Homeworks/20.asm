@@ -1,97 +1,75 @@
 .model small
 .stack 50
-.data
-    muoi db 10 
-    kq db 10,13,'Ket Qua: $'
-    b1 dw ? 
-    b2 dw ?
-    str1 db 10,13,'Nhap vao so thu 1: $'
-    str2 db 10,13,'Nhap vao so thu 2: $'
+.data      
+    str1 db 10,13,"La so hoan hao$" 
+    str2 db 10,13,"Khong phai la so hoan hao$"
+    so dw 0
+    sum dw 0
+    muoi db 10
     PRINT macro ThongBao proc
         lea dx, ThongBao
         mov ah, 9
         int 21h
     PRINT endm    
+        
 .code
     main proc
+        
         mov ax, @data
-        mov ds, ax
+        mov ds, ax     
         
-        PRINT str1
-        call Nhap
-        mov b1, bx  
-        
-        PRINT str2
-             
-        call Nhap
-        mov cx, bx
-        
-        mov ax,1
-        mov bx,1
-        Giaithua:
-            Mul bx 
-            inc bx
-            cmp bx, cx
-            jle giaithua
-        mov b2, ax
-        
-        PRINT kq
-        
-        mov bx, b1
-        mov dx, b2 
         
         Lap1:
-        cmp bx, dx
-        jz Thoat
-        ja A
-        jb B
-        A:
-            sub bx, dx
-            jmp Lap1
-        B: 
-            sub dx, bx
-            jmp Lap1
-        
-        Thoat: 
-        mov ax, bx
-        xor cx, cx
-        Lapchia:
-            xor dx, dx
-            div muoi
-            
-            add ah, 30h
-            mov dl, ah
-            push dx
-            inc cx
-            xor ah, ah
-            cmp ax, 0
-            jne Lapchia
-        Hienthi:
-            pop dx
-            mov ah, 2 
+            mov ah,1
             int 21h
-            loop Hienthi
             
-        mov ah, 4ch
-        int 21h
-        
+            cmp al, 13
+            je Tiep
+            
+            sub al, 30h
+            xor ah, ah
+            mov cx, ax
+            mov ax, so
+            mul muoi
+            add ax, cx
+            mov so, ax 
+            jmp Lap1
+            
+         Tiep:
+            mov ax, so
+            xor cx, cx
+     
+           Lap2:
+            inc cx
+            Laydu:
+                xor dx, dx
+                div cx
+                mov ax, so
+                cmp dx, 0
+                jne lap2
+                
+                Tinhtong:
+                    mov bx, sum
+                    add bx, cx
+                    cmp ax, bx
+                    je HH
+                    jl KHH
+                    mov sum, bx 
+                    jmp lap2           
+                            
+        HH:
+       
+            PRINT str1
+            
+            jmp Thoat
+            
+        KHH:
+       
+            PRINT str2
+            
+        Thoat:
+            mov ah, 4ch
+            int 21h     
+    
     main endp
-    Nhap proc
-        xor bx, bx
-      Lap:
-        mov ah, 1
-        int 21h
-        cmp al, 13
-        je Tiep
-        sub al, 30h
-        xor ah, ah
-        mov cx, ax
-        mov ax, bx
-        mul muoi
-        add ax, cx
-        mov bx, ax 
-        jmp Lap
-      Tiep:
-        ret
-    Nhap endp    
 end main
