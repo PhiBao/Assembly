@@ -1,12 +1,11 @@
 .model small
 .stack 50
 .data
-    so db 10,0, 10 dup($)
     muoi db 10 
     kq1 db 10,13,'A + B: $'
     kq2 db 10,13, 'A - B: $' 
-    b1 dw 0 
-    b2 dw 0
+    b1 dw ? 
+    b2 dw ?
     str1 db 10,13, 'Nhap vao so thu 1: $'
     str2 db 10,13, 'Nhap vao so thu 2: $'
     PRINT MACRO ThongBao proc
@@ -21,43 +20,13 @@
         
         PRINT str1
           
-        xor cx, cx
-        lea dx, so
-        mov ah, 0Ah
-        int 21h
+        call Nhap
+        mov b1, bx
         
-        lea si, so + 2                  
-        mov cl, [so + 1]
-         
-        Lap:
-            mov Ax, b1
-            xor bx, bx
-            mov bl, [si]
-            sub bl, 48
-            mul muoi
-            add ax, bx
-            mov b1, ax          
-            inc si
-            Loop Lap
-            
-        PRINT str2     
+        PRINT str2
         
-        mov ah, 0Ah
-        lea dx, so
-        int 21h
-        
-        lea si, so + 2
-        mov cl, [so + 1]
-        Lap2:
-            mov Ax, b2
-            xor bx, bx
-            mov bl, [si]
-            sub bl, 48
-            mul muoi
-            add ax, bx
-            mov b2, ax          
-            inc si
-            Loop Lap2
+        call Nhap
+        mov b2, bx
         
         PRINT kq1     
             
@@ -68,8 +37,20 @@
         PRINT kq2
             
         mov dx, b1
-        sub dx, b2
+        mov bx, b2
+        cmp dx, bx
+        ja Tiep
+        sub bx, dx
         
+        mov dx, '-'
+        mov ah, 2
+        int 21h 
+        
+        mov dx, bx
+        call Doc
+        
+       Tiep:
+        sub dx, bx
         call Doc
             
         mov ah, 4ch
@@ -77,10 +58,11 @@
         
     main endp
     
-Doc proc
+    Doc proc
     
     mov ax, dx
     xor cx, cx
+    
     Lapchia:
         xor dx, dx
         div muoi
@@ -92,12 +74,36 @@ Doc proc
         xor ah, ah
         cmp ax, 0
         jne Lapchia
+        
     Hienthi:
         pop dx
         mov ah, 2 
         int 21h
         loop Hienthi
         ret
-    Doc endp        
+    Doc endp
+    
+    Nhap proc
+        
+        xor bx, bx
+        
+      Lap:
+        mov ah, 1
+        int 21h
+        cmp al, 13
+        je Thoat
+        sub al, 30h
+        xor ah, ah
+        mov cx, ax
+        mov ax, bx
+        mul muoi
+        add ax, cx
+        mov bx, ax 
+        jmp Lap
+        
+      Thoat:
+        ret
+        
+    Nhap endp       
     
 end main
