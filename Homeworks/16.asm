@@ -1,11 +1,10 @@
 .model small
 .stack 50
 .data
-    so db 10,0, 10 dup($)
     muoi db 10 
     kq db 10,13,'Ket Qua: $'
-    b1 dw 0 
-    b2 dw 0
+    b1 dw ? 
+    b2 dw ?
     str1 db 10,13,'Nhap vao so thu 1: $'
     str2 db 10,13,'Nhap vao so thu 2: $'
     PRINT macro ThongBao proc
@@ -19,37 +18,18 @@
         mov ds, ax
         
         PRINT str1
-          
-        xor cx, cx
-        lea dx, so
-        mov ah, 0Ah
-        int 21h
-   
-        lea si, so + 2                  
-        mov cl, [so + 1]  
         
-        Lap:
-            mov Ax, b1
-            xor bx, bx
-            mov bl, [si]
-            sub bl, 30h
-            mul muoi
-            add ax, bx
-            mov b1, ax          
-            inc si
-            Loop Lap
+        call Nhap
+        mov b1, bx  
         
         PRINT str2
              
-        mov ah, 01h
-        int 21h
-        sub al, 30h
-        xor cx, cx 
-        mov cl, al
-        
+        call Nhap
+        mov cx, bx
         mov ax,1
         mov bx,1
-        Giaithua:
+        
+       Giaithua:
             Mul bx 
             inc bx
             cmp bx, cx
@@ -61,26 +41,23 @@
         mov bx, b1
         mov dx, b2 
         
-        Lap3:
+       Lap1:
         cmp bx, dx
-        jz thoat
+        jz Thoat
         ja A
         jb B
         A:
-            mov ax, bx
-            sub ax, dx
-            mov bx, ax
-            jmp Lap3
+            sub bx, dx
+            jmp Lap1
         B: 
-            mov ax, dx
-            sub ax, bx
-            mov dx, ax
-            jmp Lap3
-        thoat: 
+            sub dx, bx
+            jmp Lap1
         
+      Thoat: 
         mov ax, bx
         xor cx, cx
-        Lapchia:
+        
+       Lapchia:
             xor dx, dx
             div muoi
             
@@ -91,7 +68,8 @@
             xor ah, ah
             cmp ax, 0
             jne Lapchia
-        Hienthi:
+            
+       Hienthi:
             pop dx
             mov ah, 2 
             int 21h
@@ -101,4 +79,26 @@
         int 21h
         
     main endp
+    Nhap proc
+        
+        xor bx, bx
+        
+      Lap:
+        mov ah, 1
+        int 21h
+        cmp al, 13
+        je Tiep
+        sub al, 30h
+        xor ah, ah
+        mov cx, ax
+        mov ax, bx
+        mul muoi
+        add ax, cx
+        mov bx, ax 
+        jmp Lap
+        
+      Tiep:
+        ret
+        
+    Nhap endp    
 end main
