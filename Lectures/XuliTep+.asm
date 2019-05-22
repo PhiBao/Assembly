@@ -19,31 +19,27 @@ main proc
     
     lea si, buffer
     xor cx, cx
+    
   LapDoc:  
     mov ah, 1             
     int 21h
     cmp al, 13
-    je HienThiLai
+    je Tiep
     mov [si], al
     inc si
     inc cx
     cmp cx, 20
     jne Lapdoc
-                          
+     
     lea dx, buffer        ;ghi du lieu vao tep tin
     mov bx, controtep
     mov ah, 40H
     int 21h
-    xor cx, cx
     lea si, buffer
+    xor cx, cx
     jmp LapDoc
                 
-  HienThiLai:
-    lea dx, buffer        ;ghi du lieu vao tep tin
-    mov bx, controtep
-    mov ah, 40H
-    int 21h
-               
+  Tiep:           
     mov bx, controtep     ;dong tep
     mov ah, 3Eh
     int 21h
@@ -66,8 +62,10 @@ main proc
     int 21h
     cmp ax, 0
     je Thoat
+    
     mov cx, ax
-    lea si, buffer 
+    lea si, buffer
+     
    DocMang: 
     mov dl, [si]
     mov ah, 2
@@ -80,6 +78,7 @@ main proc
     mov bx, controtep     ;dong tep
     mov ah, 3Eh
     int 21h
+    
     mov ah, 4ch
     int 21h
         
