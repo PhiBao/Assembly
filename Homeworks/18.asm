@@ -20,31 +20,32 @@
         xor ax, ax 
         mov cl, [chuoi+ 1]
         lea si, chuoi + 2
-Tongso: 
+        
+      Tongso: 
         cmp [si], 0Dh
-        je Congcuoi
+        je Cong
         cmp [si],' '
-        jne tiep
-        Congcuoi: 
-            inc n
-            xor bx, bx
-            mov bl, Sum
-            add bl, b
-            mov Sum, bl
-            mov b, 0
-            inc si
+        jne Tiep
+       Cong: 
+        inc n
+        xor bx, bx
+        mov bl, Sum
+        add bl, b
+        mov Sum, bl
+        mov b, 0
+        inc si
             
-        tiep:
-            mov al, b
-            xor bx, bx
-            mov bl, [si]
-            sub bl, 30h
-            mul muoi
-            add ax, bx
-            mov b, al
-            inc si
+       Tiep:
+        mov al, b
+        xor bx, bx
+        mov bl, [si]
+        sub bl, 30h
+        mul muoi
+        add ax, bx
+        mov b, al
+        inc si
         loop tongso
-Chia:    
+      Chia:    
         mov ah, 9
         lea dx, nl 
         int 21h
@@ -55,23 +56,26 @@ Chia:
         div cl
         xor ah, ah
         xor cx, cx
-        Lap:
-           xor dx, dx
-           div muoi
-           mov dl, ah 
-           add dx, 30h
-           push dx
-           inc cx 
-           xor ah, ah
-           cmp ax, 0
-           jne Lap
-        Hienthi:
-            pop dx
-            mov ah, 2
-            int 21h
-            loop Hienthi
+        
+      Lap:
+        xor dx, dx
+        div muoi
+        mov dl, ah 
+        add dx, 30h
+        push dx
+        inc cx 
+        xor ah, ah
+        cmp ax, 0
+        jne Lap
+        
+      Hienthi:
+        pop dx
+        mov ah, 2
+        int 21h
+        loop Hienthi
             
         mov ah, 4ch
         int 21h
+        
     main endp
 end main
