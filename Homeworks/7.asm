@@ -17,7 +17,8 @@ main proc
     mov ds, ax
     
     lea si, mang
-    xor cx, cx 
+    xor cx, cx
+    
   Lap:        
     mov ah, 1
     int 21h 
@@ -35,6 +36,7 @@ main proc
     mov al, cl
     xor ah, ah  
     xor cx, cx
+    
   Doc:
     xor dx,dx
     div muoi
@@ -57,6 +59,7 @@ main proc
             
     mov cl, length
     lea si, mang
+    
   Xuat:
     mov dl, [si]
     mov ah, 2
