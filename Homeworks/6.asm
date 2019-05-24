@@ -1,7 +1,7 @@
 .model small
 .stack 50
 .data
-    nl db " $"
+    void db " $"
     ktu db ?
 .code
 main proc
@@ -18,7 +18,7 @@ main proc
     
    HienThi:
     mov ah, 9
-    lea dx, nl
+    lea dx, void
     int 21h
     
     mov dl, ktu
