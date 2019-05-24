@@ -11,38 +11,7 @@
         mov ah, 9
         int 21h
     PRINT ENDM    
-.code
-    
-    ;in so he 10 o ax
-    PrintDec proc
-        
-        xor cx, cx
-      LapChia:
-        xor dx, dx
-        div muoi
-        add dx, 30h
-        push dx
-        inc cx
-        cmp ax, 0
-        jne LapChia
-      DocStack:
-        cmp cx, 1
-        je Inkhong 
-       Lap: 
-        pop dx
-        mov ah, 2
-        int 21h
-        loop Lap
-        jmp Thoat 
-       Inkhong:
-        mov dl, 30h
-        mov ah, 2
-        int 21h
-        jmp Lap 
-       Thoat: 
-        ret
-        
-    PrintDec Endp    
+.code    
 main proc
     
     mov ax, @data
@@ -71,5 +40,40 @@ main proc
     int 21h
     
 main endp
+    ;in so he 10 o ax
+    PrintDec proc
+        
+        xor cx, cx
+        
+      LapChia:
+        xor dx, dx
+        div muoi
+        add dx, 30h
+        push dx
+        inc cx
+        cmp ax, 0
+        jne LapChia
+        
+      DocStack:
+        cmp cx, 1
+        je Inkhong
+        
+       Lap: 
+        pop dx
+        mov ah, 2
+        int 21h
+        loop Lap
+        jmp Thoat
+        
+       Inkhong:
+        mov dl, 30h
+        mov ah, 2
+        int 21h
+        jmp Lap
+        
+       Thoat: 
+        ret
+        
+    PrintDec Endp
 end main
     
