@@ -20,6 +20,7 @@
         mov controtep, ax
         
         lea si, buffer
+        
         LapDoc:
             cmp cx, 10
             je HienThiLai
@@ -39,6 +40,7 @@
             
             xor bl, bl
             inc bl
+            
            LapChia:               ;kiem tra xem co phai so nguyen to khong
             inc bl
          
@@ -61,9 +63,7 @@
             lea dx, buffer        ;ghi du lieu vao tep tin
             mov bx, controtep
             mov ah, 40h
-            int 21h
-            lea si, buffer
-            jmp LapDoc            
+            int 21h          
              
         HienThiLai:
             lea dx, buffer        ;ghi du lieu vao tep tin
@@ -94,7 +94,8 @@
             cmp ax, 0
             je Thoat
             mov cx, ax
-            lea si, buffer 
+            lea si, buffer
+             
         DocMang: 
             mov dl, [si]
             add dl, 30h
