@@ -21,9 +21,10 @@ main proc
     
     PRINT nl
     
-    mov ax, 0
+    xor ah, ah
     mov al, ktu
     xor cx, cx
+    
 Lap1:
     xor dx, dx
     div msau
@@ -50,7 +51,8 @@ Lap1:
     
     xor ah, ah
     mov al, ktu
-    xor cx, cx       
+    xor cx, cx
+    
 Lap2:                                
     xor dx, dx       
     div muoi     
@@ -71,9 +73,10 @@ Lap2:
         
     PRINT nl
      
-    xor bx, bx
+    xor bh, bh
     mov bl, ktu
     mov cx, 8
+    
 Lap3:
     mov dl, 30h
     shl bl, 1
