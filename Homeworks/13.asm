@@ -23,88 +23,85 @@
         
         PRINT str1 
          
-        xor cx, cx
-        lea dx, so
-        mov ah, 0Ah
-        int 21h
+        call Nhap
+        mov b1, bx
         
-        lea si, so + 2                  
-        mov cl, 4  
-        Lap1:
-            mov Ax, b1
-            xor bx, bx
-            mov bl, [si]
-            sub bl, 48
-            mul msau
-            add ax, bx
-            mov b1, ax          
-            inc si
-            Loop Lap1  
-      
         PRINT str2
         
-        xor cx, cx
-        lea dx, so
-        mov ah, 0Ah
+        call Nhap
+        mov b2, bx 
+    
+        PRINT str3
+    
+        mov bx, b2
+        add bx, b1 
+    
+        mov dx, 30h
+        adc dx, 0
+        mov ah, 2
         int 21h
-        
-        lea si, so + 2
-        mov cl, 4
-        Lap2:
-            mov Ax, b2
-            xor bx, bx
-            mov bl, [si]
-            sub bl, 48
-            mul msau
-            add ax, bx
-            mov b2, ax          
-            inc si
-            Loop Lap2 
+         
+        call Doc  
     
-    PRINT str3
+        PRINT str4
     
-    mov bx, b2
-    add bx, b1 
+        mov bx, b1
+        sub bx, b2
+        call Doc
     
-    mov dx, 30h
-    adc dx, 0
-    mov ah, 2
-    int 21h 
-    call Xuli  
+        PRINT str5  
     
-    PRINT str4
+        mov bx, b1
+        or bx, b2
+        call Doc
     
-    mov bx, b1
-    sub bx, b2
-    call Xuli
+        PRINT str6
     
-    PRINT str5  
-    
-    mov bx, b1
-    or bx, b2
-    call Xuli
-    
-    PRINT str6
-    
-    mov bx, b1
-    xor bx, b2
-    call Xuli
+        mov bx, b1
+        xor bx, b2
+        call Doc
      
-    mov ah, 4ch
-    int 21h
+        mov ah, 4ch
+        int 21h
+    
     main endp
         
-Xuli proc
+    Doc proc
     
-    mov cx, 16
-Lap:
-    mov dl, 30h
-    shl bx, 1
-    adc dl, 0
-    mov ah, 2
-    int 21h
-    loop Lap
-    ret
-    Xuli endp        
+        mov cx, 16
+    
+      Lap1:
+        mov dl, 30h
+        shl bx, 1
+        adc dl, 0
+        mov ah, 2
+        int 21h
+        loop Lap1
+        ret
+    
+    Doc endp
+    
+    Nhap proc
+        
+        xor bx, bx
+        
+      Lap2:
+        mov ah, 1
+        int 21h
+        cmp al, 13
+        je Thoat
+        sub al, 30h
+        xor ah, ah
+        mov cx, ax
+        mov ax, bx
+        mul msau
+        add ax, cx
+        mov bx, ax 
+        jmp Lap2
+        
+      Thoat:
+        ret
+        
+    Nhap endp   
         
 end main
