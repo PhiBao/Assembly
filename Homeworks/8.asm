@@ -22,7 +22,8 @@ main proc
     PRINT nl
         
     lea si, buffer+ 2
-    mov cl, [buffer + 1] 
+    mov cl, [buffer + 1]
+    
   Lap1:
     cmp [si], 'A'
     Jl Next1
@@ -40,6 +41,7 @@ main proc
         
     Lea si, buffer + 2
     mov cl, [buffer + 1]
+    
   Lap2:
     cmp [si], 'a'
     Jl Next2
