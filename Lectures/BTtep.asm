@@ -58,12 +58,7 @@
             mov [si], al
             inc si
             cmp cx, 10
-            jne LapDoc
-              
-            lea dx, buffer        ;ghi du lieu vao tep tin
-            mov bx, controtep
-            mov ah, 40h
-            int 21h          
+            jne LapDoc        
              
         HienThiLai:
             lea dx, buffer        ;ghi du lieu vao tep tin
