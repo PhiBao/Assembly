@@ -44,6 +44,7 @@
         mov b, 0
         inc n
         inc si
+        jmp Tongso
             
        Tiep:
         mov al, b
@@ -54,7 +55,7 @@
         add ax, bx
         mov b, al
         inc si
-        loop tongso
+        loop Tongso
         
         PRINT str2
         
