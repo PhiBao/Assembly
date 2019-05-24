@@ -38,25 +38,25 @@ MAIN PROC
     adc dx, 0
     mov ah, 2
     int 21h  
-    call Xuli
+    call Doc
              
     PRINT str4
              
     mov bx, b1
     sub bx, b2
-    call Xuli
+    call Doc
     
     PRINT str5  
     
     mov bx, b1
     or bx, b2
-    call Xuli
-    
+    call Doc
+   
     PRINT str6
     
     mov bx, b1
     and bx, b2
-    call Xuli
+    call Doc
     
     mov ah, 4ch
     int 21h
@@ -77,7 +77,7 @@ Lap1:
     
     Nhap endp
     
-Xuli proc
+Doc proc
     
     mov cx, 16
 Lap2:
@@ -89,6 +89,6 @@ Lap2:
     loop Lap2
     ret
     
-    Xuli endp
+    Doc endp
     
 end main
