@@ -37,6 +37,7 @@ MAIN PROC
     mov dx, 30h
     adc dx, 0
     mov ah, 2
+    
     int 21h  
     call Doc
              
@@ -66,13 +67,18 @@ Nhap proc
     
     mov bx, 0
     mov cx, 16
+    
 Lap1:
     mov ah, 1
     int 21h
+    cmp al, 13
+    je Thoat
     sub al, 30h
     shl bx, 1
     add bl, al
     loop Lap1
+   
+   Thoat:
     ret
     
     Nhap endp
@@ -80,6 +86,7 @@ Lap1:
 Doc proc
     
     mov cx, 16
+    
 Lap2:
     mov dl, 30h
     shl bx, 1
