@@ -9,6 +9,7 @@
      b db 0
 .code
     main proc
+    
         mov ax, @data
         mov ds, ax
         
@@ -22,10 +23,11 @@
         lea si, chuoi + 2
         
       Tongso: 
-        cmp [si], 0Dh
+        cmp [si], 13
         je Cong
         cmp [si],' '
         jne Tiep
+        
        Cong: 
         inc n
         xor bx, bx
@@ -45,6 +47,7 @@
         mov b, al
         inc si
         loop tongso
+        
       Chia:    
         mov ah, 9
         lea dx, nl 
