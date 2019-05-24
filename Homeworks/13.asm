@@ -9,7 +9,6 @@
     str4 db 10, 13, 'A - B =     $'
     str5 db 10, 13, 'A OR B =    $'
     str6 db 10, 13, 'A XOR B =   $'
-    so db 5,0,5 dup(?) ,'$'
     msau dw 16
     PRINT MACRO ThongBao proc
             lea dx, ThongBao
