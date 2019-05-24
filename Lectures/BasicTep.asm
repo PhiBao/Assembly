@@ -24,23 +24,25 @@ main proc
     je HienThiLai
     mov buffer, al
     
-    lea dx, buffer
+    lea dx, buffer        
     mov bx, controtep
     mov cx, 1
-    mov ah, 40H
+    mov ah, 40H           ;ghi du lieu vao tep
     int 21h
     jmp LapDoc
     
   HienThiLai:
     mov bx, controtep
-    mov ah, 3Eh
+    mov ah, 3Eh           ;dong tep
     int 21h
+    
     lea dx, nl
     mov ah, 9
     int 21h
+    
     lea dx, tentep
     mov al, 2
-    mov ah, 3Dh
+    mov ah, 3Dh           ;mo tep
     int 21h
     mov controtep, ax
     
@@ -48,9 +50,10 @@ main proc
     lea dx, buffer
     mov bx, controtep
     mov cx, 1
-    mov ah, 3Fh
+    mov ah, 3Fh           ;doc du lieu tu tep
     int 21h
-    cmp ax, 0
+    
+    cmp ax, 0             
     je Thoat
     mov ah, 2
     mov dl, buffer
@@ -59,12 +62,10 @@ main proc
    
   Thoat:  
     mov bx, controtep
-    mov ah, 3Eh
+    mov ah, 3Eh           ;dong tep
     int 21h
     mov ah, 4ch
     int 21h
         
 main endp
 end main
-    
-    
