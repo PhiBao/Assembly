@@ -3,24 +3,32 @@
 .data
      Sum db 0 
      muoi db 10
-     nl db 10,13,'$'
-     chuoi db 50,0,50 dup($)
+     str1 db 'Nhap vao day so: $'
+     str2 db 10,13,'Trung binh cong la: $'
+     chuoi db 50,?,51 dup('$')
      n db 0 
      b db 0
+     PRINT macro ThongBao proc
+        mov ah, 9
+        lea dx, ThongBao
+        int 21h
+     PRINT endm      
 .code
     main proc
     
         mov ax, @data
         mov ds, ax
         
-        xor cx, cx 
+        PRINT str1
+         
         mov ah, 0Ah
         lea dx, chuoi
         int 21h
-        
-        xor ax, ax 
+         
+        xor cx, cx 
         mov cl, [chuoi+ 1]
         lea si, chuoi + 2
+        xor ax, ax
         
       Tongso: 
         cmp [si], 13
@@ -28,13 +36,13 @@
         cmp [si],' '
         jne Tiep
         
-       Cong: 
-        inc n
+       Cong:
         xor bx, bx
         mov bl, Sum
         add bl, b
         mov Sum, bl
         mov b, 0
+        inc n
         inc si
             
        Tiep:
@@ -48,13 +56,10 @@
         inc si
         loop tongso
         
-      Chia:    
-        mov ah, 9
-        lea dx, nl 
-        int 21h
+        PRINT str2
         
-        xor Ax, Ax 
-        mov al, sum 
+        xor ax, ax
+        mov al, Sum
         mov cl, n
         div cl
         xor ah, ah
@@ -75,10 +80,11 @@
         pop dx
         mov ah, 2
         int 21h
-        loop Hienthi
-            
+        loop Hienthi 
+      
         mov ah, 4ch
         int 21h
         
-    main endp
+    main endp   
+            
 end main
