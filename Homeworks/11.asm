@@ -31,14 +31,13 @@ MAIN PROC
     
     PRINT str3
     
-    mov bx, b2
-    add bx, b1
-    
     mov dx, 30h
     adc dx, 0
     mov ah, 2
-    
     int 21h  
+    
+    mov bx, b2
+    add bx, b1    
     call Doc
              
     PRINT str4
