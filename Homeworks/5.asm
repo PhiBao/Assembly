@@ -12,6 +12,7 @@
    PRINT ENDM  
 .code
 main proc
+
     mov ax, @data
     mov ds, ax
     
@@ -34,7 +35,8 @@ main proc
     cmp ktu, 'c'
     je Chieu
     
-    jmp Thoat    
+    jmp Thoat
+    
   Sang: 
     PRINT str1
     jmp Thoat    
@@ -49,6 +51,6 @@ main proc
   Thoat:     
     mov ah, 4ch
     int 21h
+    
 main endp
 end main
-    
