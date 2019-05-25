@@ -5,6 +5,7 @@
     nl db 10,13,'$'
 .code
     main proc
+    
         mov ax, @data
         mov ds, ax
            
@@ -25,6 +26,7 @@
             jle giaithua
              
         xor cx, cx
+        
         Lap1:
             xor dx, dx
             div muoi
